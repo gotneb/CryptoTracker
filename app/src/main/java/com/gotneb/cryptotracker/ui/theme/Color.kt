@@ -1,6 +1,8 @@
 package com.gotneb.cryptotracker.ui.theme
 import androidx.compose.ui.graphics.Color
 
+val greenBackground = Color(0xFF119B00)
+
 val primaryLight = Color(0xFF365E9D)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFF82A8EC)

@@ -2,7 +2,7 @@ package com.gotneb.cryptotracker.crypto.domain
 
 data class Coin(
     val id: String,
-    val rank: String,
+    val rank: Int,
     val name: String,
     val symbol: String,
     val marketCapUsd: Double,

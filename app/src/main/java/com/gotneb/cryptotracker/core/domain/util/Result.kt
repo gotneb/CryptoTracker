@@ -1,4 +1,4 @@
-package com.gotneb.cryptotracker.util
+package com.gotneb.cryptotracker.core.domain.util
 
 typealias DomainError = Error
 

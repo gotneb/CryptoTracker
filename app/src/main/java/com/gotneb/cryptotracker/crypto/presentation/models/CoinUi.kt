@@ -1,8 +1,8 @@
 package com.gotneb.cryptotracker.crypto.presentation.models
 
 import androidx.annotation.DrawableRes
+import com.gotneb.cryptotracker.core.presentation.util.getDrawableIdForCoin
 import com.gotneb.cryptotracker.crypto.domain.Coin
-import com.gotneb.cryptotracker.util.getDrawableIdForCoin
 import java.text.NumberFormat
 import java.util.Locale
 

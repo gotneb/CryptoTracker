@@ -1,4 +1,4 @@
-package com.gotneb.cryptotracker.util
+package com.gotneb.cryptotracker.core.presentation.util
 
 import com.gotneb.cryptotracker.R
 

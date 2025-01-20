@@ -1,6 +1,7 @@
 package com.gotneb.cryptotracker
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import com.gotneb.cryptotracker.core.presentation.util.ObserveAsEvents
 import com.gotneb.cryptotracker.core.presentation.util.toString
+import com.gotneb.cryptotracker.crypto.presentation.coin_detail.CoinDetailScreen
 import com.gotneb.cryptotracker.crypto.presentation.coin_list.CoinListEvent
 import org.koin.androidx.compose.koinViewModel
 
@@ -41,10 +43,21 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     }
-                    CoinListScreen(
-                        state = state,
-                        modifier = Modifier.padding(padding),
-                    )
+                    when {
+                        state.selectedCoin != null -> {
+                            CoinDetailScreen(
+                                state = state,
+                                modifier = Modifier.padding(padding)
+                            )
+                        }
+                        else -> {
+                            CoinListScreen(
+                                state = state,
+                                onAction = viewModel::onAction,
+                                modifier = Modifier.padding(padding),
+                            )
+                        }
+                    }
                 }
             }
         }

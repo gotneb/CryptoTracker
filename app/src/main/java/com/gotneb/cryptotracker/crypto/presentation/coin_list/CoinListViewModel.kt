@@ -1,5 +1,6 @@
 package com.gotneb.cryptotracker.crypto.presentation.coin_list
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gotneb.cryptotracker.core.domain.util.onError
@@ -36,7 +37,9 @@ class CoinListViewModel(
     fun onAction(action: CoinListAction) {
         when (action) {
             is CoinListAction.OnCoinClick -> {
-
+                _state.update { it.copy(
+                    selectedCoin = action.coinUi
+                ) }
             }
         }
     }

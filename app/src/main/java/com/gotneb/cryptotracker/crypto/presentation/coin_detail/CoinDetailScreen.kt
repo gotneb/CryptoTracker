@@ -19,7 +19,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,49 +32,55 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.gotneb.cryptotracker.R
 import com.gotneb.cryptotracker.crypto.presentation.coin_detail.components.InfoCard
 import com.gotneb.cryptotracker.crypto.presentation.coin_list.CoinListState
 import com.gotneb.cryptotracker.crypto.presentation.coin_list.components.previewCoin
-import com.gotneb.cryptotracker.ui.theme.CryptoTrackerTheme
-import com.gotneb.cryptotracker.R
 import com.gotneb.cryptotracker.crypto.presentation.models.toDisplayableNumber
+import com.gotneb.cryptotracker.ui.theme.CryptoTrackerTheme
 import com.gotneb.cryptotracker.ui.theme.greenBackground
 
 @Composable
 fun CoinDetailScreen(
     state: CoinListState,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
-    val contentColor = MaterialTheme.colorScheme.onSurface
-    if (state.isLoading) {
+    val contentColor = if(isSystemInDarkTheme()) {
+        Color.White
+    } else {
+        Color.Black
+    }
+    if(state.isLoading) {
         Box(
             modifier = modifier
                 .fillMaxSize(),
-            contentAlignment = Alignment.Center,
+            contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator()
         }
-    } else if (state.selectedCoin != null) {
+    } else if(state.selectedCoin != null) {
         val coin = state.selectedCoin
         Column(
             modifier = modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Icon(
-                imageVector = ImageVector.vectorResource(id = coin.iconRes),
+                imageVector = ImageVector.vectorResource(
+                    id = coin.iconRes
+                ),
                 contentDescription = coin.name,
                 modifier = Modifier.size(100.dp),
-                tint = MaterialTheme.colorScheme.primary,
+                tint = MaterialTheme.colorScheme.primary
             )
             Text(
                 text = coin.name,
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Black,
                 textAlign = TextAlign.Center,
-                color = contentColor,
+                color = contentColor
             )
             Text(
                 text = coin.symbol,
@@ -86,34 +91,34 @@ fun CoinDetailScreen(
             )
             FlowRow(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
+                horizontalArrangement = Arrangement.Center
             ) {
                 InfoCard(
-                    title = stringResource(R.string.market_cap),
+                    title = stringResource(id = R.string.market_cap),
                     formattedText = "$ ${coin.marketCapUsd.formatted}",
-                    icon = ImageVector.vectorResource(R.drawable.stock),
+                    icon = ImageVector.vectorResource(R.drawable.stock)
                 )
                 InfoCard(
-                    title = stringResource(R.string.price),
-                    formattedText = "$ ${coin.marketCapUsd.formatted}",
-                    icon = ImageVector.vectorResource(R.drawable.dollar),
+                    title = stringResource(id = R.string.price),
+                    formattedText = "$ ${coin.priceUsd.formatted}",
+                    icon = ImageVector.vectorResource(R.drawable.dollar)
                 )
                 val absoluteChangeFormatted =
                     (coin.priceUsd.value * (coin.changePercent24Hr.value / 100))
                         .toDisplayableNumber()
-                val isPositive = coin.changePercent24Hr.value > 0
-                val contentColor = if (isPositive) {
-                    if (isSystemInDarkTheme()) Color.Green else greenBackground
+                val isPositive = coin.changePercent24Hr.value > 0.0
+                val contentColor = if(isPositive) {
+                    if(isSystemInDarkTheme()) Color.Green else greenBackground
                 } else {
                     MaterialTheme.colorScheme.error
                 }
                 InfoCard(
-                    title = stringResource(R.string.change_last_24h),
+                    title = stringResource(id = R.string.change_last_24h),
                     formattedText = absoluteChangeFormatted.formatted,
-                    icon = if (isPositive) {
-                        ImageVector.vectorResource(R.drawable.trending)
+                    icon = if(isPositive) {
+                        ImageVector.vectorResource(id = R.drawable.trending)
                     } else {
-                        ImageVector.vectorResource(R.drawable.trending_down)
+                        ImageVector.vectorResource(id = R.drawable.trending_down)
                     },
                     contentColor = contentColor
                 )

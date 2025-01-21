@@ -22,21 +22,19 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewDynamicColors
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.gotneb.cryptotracker.ui.theme.CryptoTrackerTheme
 import com.gotneb.cryptotracker.R
+import com.gotneb.cryptotracker.ui.theme.CryptoTrackerTheme
 
 @Composable
 fun InfoCard(
     title: String,
     formattedText: String,
     icon: ImageVector,
-    contentColor: Color = MaterialTheme.colorScheme.onSurface,
     modifier: Modifier = Modifier,
+    contentColor: Color = MaterialTheme.colorScheme.onSurface,
 ) {
     val defaultTextStyle = LocalTextStyle.current.copy(
         textAlign = TextAlign.Center,
@@ -59,30 +57,32 @@ fun InfoCard(
         ),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainer,
-            contentColor = contentColor,
+            contentColor = contentColor
         )
     ) {
         AnimatedContent(
             targetState = icon,
-            label = "IconAnimation",
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally),
+            modifier = Modifier.align(
+                Alignment.CenterHorizontally
+            ),
+            label = "IconAnimation"
         ) { icon ->
             Icon(
                 imageVector = icon,
                 contentDescription = title,
-                tint = contentColor,
                 modifier = Modifier
                     .size(75.dp)
                     .padding(top = 16.dp),
+                tint = contentColor
             )
         }
-        Spacer(Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         AnimatedContent(
             targetState = formattedText,
-            label = "ValueAnimation",
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
+            modifier = Modifier.align(
+                Alignment.CenterHorizontally
+            ),
+            label = "ValueAnimation"
         ) { formattedText ->
             Text(
                 text = formattedText,
@@ -91,30 +91,41 @@ fun InfoCard(
                     .padding(horizontal = 16.dp)
             )
         }
-        Spacer(Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = title,
             textAlign = TextAlign.Center,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Light,
-            color = contentColor,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(horizontal = 16.dp)
-                .padding(bottom = 16.dp)
+                .padding(bottom = 16.dp),
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Light,
+            color = contentColor
         )
     }
 }
 
 @PreviewLightDark
-@PreviewDynamicColors
 @Composable
 private fun InfoCardPreview() {
     CryptoTrackerTheme {
         InfoCard(
             title = "Price",
-            formattedText = "$ 63,157.45",
+            formattedText = "$ 120,080,398,364,84",
             icon = ImageVector.vectorResource(id = R.drawable.dollar)
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun InfoCardPreview2() {
+    CryptoTrackerTheme {
+        InfoCard(
+            title = "Change last 24h",
+            formattedText = "-13.74",
+            icon = ImageVector.vectorResource(id = R.drawable.trending)
         )
     }
 }

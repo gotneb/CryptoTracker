@@ -1,10 +1,13 @@
 package com.gotneb.cryptotracker.core.domain.data.networking
 
+import android.util.Log
 import com.gotneb.cryptotracker.core.domain.util.NetworkError
 import com.gotneb.cryptotracker.core.domain.util.Result
 import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
+import kotlinx.serialization.json.Json
 
 suspend inline fun <reified  T> responseToResult(
     response: HttpResponse
@@ -14,7 +17,18 @@ suspend inline fun <reified  T> responseToResult(
             try {
                 Result.Success(response.body<T>())
             } catch (e: NoTransformationFoundException) {
-                Result.Error(NetworkError.SERIALIZATION)
+                Log.e("responseToResult", "NoTransformationFoundException: ${e.toString()}")
+                try {
+                    // This is needed because the api weirdly returns a `text/html` response header
+                    val responseBody = response.bodyAsText()
+                    val parsedResponse = Json {
+                        ignoreUnknownKeys = true
+                    }.decodeFromString<T>(responseBody)
+                    Result.Success(parsedResponse)
+                } catch (serializationException: Exception) {
+                    Log.e("responseToResult", "Serialization Error: ${serializationException.toString()}")
+                    Result.Error(NetworkError.SERIALIZATION)
+                }
             }
         }
         408 -> Result.Error(NetworkError.REQUEST_TIMEOUT)

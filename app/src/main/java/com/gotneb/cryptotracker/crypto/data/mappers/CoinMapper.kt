@@ -13,11 +13,11 @@ import com.gotneb.cryptotracker.crypto.domain.Coin
 fun CoinDto.toCoin(): Coin {
     return Coin(
         id = id,
-        rank = rank,
+        rank = rank.toInt(),
         name = name,
         symbol = symbol,
-        marketCapUsd = marketCapUsd,
-        priceUsd = priceUsd,
-        changePercent24Hr = changePercent24Hr
+        marketCapUsd = marketCapUsd.toDouble(),
+        priceUsd = priceUsd.toDouble(),
+        changePercent24Hr = if (changePercent24Hr == null) 0.0 else changePercent24Hr.toDouble(),
     )
 }

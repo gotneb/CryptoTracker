@@ -1,7 +1,11 @@
 package com.gotneb.cryptotracker.crypto.data.mappers
 
 import com.gotneb.cryptotracker.crypto.data.networking.dto.CoinDto
+import com.gotneb.cryptotracker.crypto.data.networking.dto.CoinPriceDto
 import com.gotneb.cryptotracker.crypto.domain.Coin
+import com.gotneb.cryptotracker.crypto.domain.CoinPrice
+import java.time.Instant
+import java.time.ZoneId
 
 /*
  * As said, it's overkill, but it's GREAT for big projects
@@ -19,5 +23,14 @@ fun CoinDto.toCoin(): Coin {
         marketCapUsd = marketCapUsd.toDouble(),
         priceUsd = priceUsd.toDouble(),
         changePercent24Hr = if (changePercent24Hr == null) 0.0 else changePercent24Hr.toDouble(),
+    )
+}
+
+fun CoinPriceDto.toCoinPrice(): CoinPrice {
+    return CoinPrice(
+        priceUsd = priceUsd,
+        datetime = Instant
+            .ofEpochMilli(time)
+            .atZone(ZoneId.of("UTC"))
     )
 }

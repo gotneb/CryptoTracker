@@ -4,7 +4,7 @@
 </p>
 
 ## 🧑‍💻 Architeture
-This project follows the **MVVM** pattern to separate concerns and promote modularity. Key practices include:
+This project follows the Philipp Lackner's course using **MVVM** pattern to separate concerns and promote modularity. Key practices include:
 - State Management: ViewModels manage UI states efficiently, ensuring responsive and clean UI updates.
 - Separation of Concerns: Clear distinction between UI logic, business logic, and data layers.
 - Dependency Injection: **Koin** handles dependencies across the app, making it easier to test and manage.
